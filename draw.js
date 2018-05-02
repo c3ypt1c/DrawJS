@@ -11,9 +11,9 @@ class DrawJS {
         this.logTranslate = true
     }
     resize(x, y) {
-        this.width = x
+        this.style.width = x
         this.canv.width = x
-        this.height = y
+        this.style.height = y
         this.canv.height = y
     }
     fullscreen() {
