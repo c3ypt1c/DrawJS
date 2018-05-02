@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+	<head>
+		<title>Example Drawing</title>
+		<script src="draw.js"></script>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+
+		<canvas id="c"></canvas>
+
+		<script type="text/javascript">
+			let d = new DrawJS('c')
+			d.resize("400px","400px")
+			d.circle(250, 250, 100, 'yellow', true)
+			var ear0=[
+			    new Vertex(240, 150),
+			    new Vertex(200, 100),
+			    new Vertex(150, 250)
+			]
+			var ear1=[
+			    new Vertex(260, 150),
+			    new Vertex(300, 100),
+			    new Vertex(350, 250)
+			]
+
+			//Draw the ears
+			d.polygon(ear0, 'yellow', true)
+			d.polygon(ear1, 'yellow', true)
+
+			//Draw the kawaii anime eyes (✧ω✧)
+			d.circle(210, 230, 15, 'black', true)
+			d.point(200, 225, 'white')
+			d.circle(290, 230, 15, 'black', true)
+			d.point(280, 225, 'white')
+		</script>
+	</body>
+</html>
