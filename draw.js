@@ -1,21 +1,34 @@
 class DrawJS {
     constructor(canvasID) {
-        this.canvID = canvasID
-        this.canv = document.getElementById(canvasID)
-        this.ctx = this.canv.getContext('2d')
-        this.width = this.canv.width
-        this.height = this.canv.height
-        this.translationX = 0
+        this.canvID = canvasID //Setting the canvas ID
+        this.canv = document.getElementById(canvasID) //Getting the element
+        this.ctx = this.canv.getContext('2d') //Setting the context
+
+        if (typeof variable !== 'undefined') { //If the canvas width and height is not declared in the DOM, use defaults
+            this.width = this.canv.width //Setting from the DOM values 
+            this.height = this.canv.height
+
+        } else {
+            this.width = "0px" //Setting width and height to 0 until resize if not defined
+            this.height = "0px"
+        }
+
+        this.canv.width = null //Removing the width and height from DOM
+        this.canv.height = null
+
+        this.translationX = 0 //Setting defaults
         this.translationY = 0
         this.translated = false
         this.logTranslate = true
     }
+
     resize(x, y) {
-        this.width = x
-        this.canv.width = x
-        this.height = y
-        this.canv.height = y
+        if ( typeof ( x ) === "string" ) this.style.width = x
+        else this.style.width = x + "px"
+        if ( typeof ( y ) === "string" ) this.style.height = y
+        else this.style.height = y + "px"
     }
+
     fullscreen() {
         let x = document.createElement('STYLE'),
             t = document.createTextNode(
@@ -27,6 +40,7 @@ class DrawJS {
         document.head.appendChild(x)
         this.resize(window.innerWidth, window.innerHeight)
     }
+
     background(color) {
         if (this.translated) {
             this.ctx.fillStyle = color
@@ -40,6 +54,7 @@ class DrawJS {
             this.ctx.fillRect(0, 0, this.width, this.height)
         }
     }
+
     arc(x, y, r, start, end, anticlock, color, fill) {
         if (fill) {
             this.ctx.fillStyle = color
@@ -53,6 +68,7 @@ class DrawJS {
             this.ctx.stroke()
         }
     }
+
     circle(x, y, r, color, fill) {
         if (fill) {
             this.arc(x, y, r, 0, 2 * Math.PI, false, color, true)
@@ -60,12 +76,15 @@ class DrawJS {
             this.arc(x, y, r, 0, 2 * Math.PI, false, color, false)
         }
     }
+
     point(x, y, color) {
         this.circle(x, y, 3, color, true)
     }
+
     pixel(x, y, color) {
         this.circle(x, y, 1, color, true)
     }
+
     rect(x, y, w, h, color, fill) {
         if (fill) {
             this.ctx.fillStyle = color
@@ -75,6 +94,7 @@ class DrawJS {
             this.ctx.strokeRect(x, y, w, h)
         }
     }
+
     polygon(vertices, color, fill) {
         if (fill) {
             this.ctx.fillStyle = color
@@ -94,21 +114,26 @@ class DrawJS {
             this.ctx.stroke()
         }
     }
+
     line(vertex0, vertex1, color) {
         this.ctx.strokeStyle = color
         this.ctx.moveTo(vertex0.x, vertex0.y)
         this.ctx.lineTo(vertex1.x, vertex1.y)
         this.ctx.stroke()
     }
+
     rotate(degrees) {
         this.ctx.rotate(degrees * Math.PI / 180)
     }
+
     flipX() {
         this.ctx.scale(-1, 1)
     }
+
     flipY() {
         this.ctx.scale(1, -1)
     }
+
     translate(x, y) {
         if (this.logTranslate)
             console.log('This function is not yet fully supported' +
@@ -120,6 +145,7 @@ class DrawJS {
         this.translated = true
         this.ctx.translate(x, y)
     }
+
     center() {
         this.logTranslate = false
         this.translationX = this.canv.width / 2
@@ -127,10 +153,12 @@ class DrawJS {
         this.translate(this.canv.width / 2, this.canv.height / 2)
         this.logTranslate = true
     }
+
     resetTranslation() {
         this.translated = false
         this.translate(-this.transLationX, -this.translationY)
     }
+
     write(text, x, y, color, fill, font) {
         this.ctx.font = font
         if(fill){
